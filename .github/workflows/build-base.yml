@@ -1,0 +1,52 @@
+name: Build Base Image
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "devops/docker/Dockerfile.base"
+      - "devops/docker/nginx.conf"
+  workflow_dispatch:
+
+env:
+  REGION: ${{ secrets.REGION }}
+  REGISTRY: ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/portfolio
+  BASE_IMAGE: ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/portfolio/base
+
+jobs:
+  build-base:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
+      - name: Mirror nginx:alpine to Artifact Registry
+        continue-on-error: true
+        run: |
+          docker pull nginx:alpine
+          docker tag nginx:alpine ${{ env.REGISTRY }}/nginx:alpine
+          docker push ${{ env.REGISTRY }}/nginx:alpine
+
+      - name: Build and push base image
+        run: |
+          docker build --build-arg REGISTRY=${{ env.REGISTRY }} \
+            -t ${{ env.BASE_IMAGE }}:${{ github.sha }} -t ${{ env.BASE_IMAGE }}:latest -f devops/docker/Dockerfile.base .
+          docker push ${{ env.BASE_IMAGE }}:${{ github.sha }}
+          docker push ${{ env.BASE_IMAGE }}:latest

@@ -1,0 +1,76 @@
+name: Build and Deploy to Cloud Run
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "website/**"
+      - "devops/docker/Dockerfile"
+      - "devops/docs/**"
+  workflow_dispatch:
+
+env:
+  REGION: ${{ secrets.REGION }}
+  REGISTRY: ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/portfolio
+  IMAGE: ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/portfolio/website
+  BASE_IMAGE: ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/portfolio/base
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
+      - name: Mirror node:20-alpine to Artifact Registry
+        continue-on-error: true
+        run: |
+          docker pull node:20-alpine
+          docker tag node:20-alpine ${{ env.REGISTRY }}/node:20-alpine
+          docker push ${{ env.REGISTRY }}/node:20-alpine
+
+      - name: Build and push app image
+        run: |
+          docker build --build-arg BASE_IMAGE=${{ env.BASE_IMAGE }}:latest \
+            --build-arg REGISTRY=${{ env.REGISTRY }} \
+            -t ${{ env.IMAGE }}:${{ github.sha }} -t ${{ env.IMAGE }}:latest -f devops/docker/Dockerfile .
+          docker push ${{ env.IMAGE }}:${{ github.sha }}
+          docker push ${{ env.IMAGE }}:latest
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: portfolio-website
+          region: ${{ env.REGION }}
+          image: ${{ env.IMAGE }}:${{ github.sha }}

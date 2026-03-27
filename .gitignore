@@ -1,0 +1,6 @@
+.claude/
+devops/terraform/.terraform/
+devops/terraform/*.tfplan
+devops/terraform/*.tfstate
+devops/terraform/*.tfstate.backup
+devops/terraform/terraform.tfvars

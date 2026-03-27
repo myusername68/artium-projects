@@ -1,0 +1,4 @@
+project_id         = ""
+cloudflare_api_token = ""
+cloudflare_zone_id = ""
+domain_name        = ""
