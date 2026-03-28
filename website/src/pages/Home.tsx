@@ -30,10 +30,7 @@ export default function Home() {
 
           <div className="flex-1">
             <p className="text-lg text-gray-600 dark:text-gray-400 mb-4">
-              5 years of DevOps experience. Azure specialist. Kubernetes enthusiast.
-              I bridge the gap between legacy financial systems and modern cloud architecture, having spent years navigating the unique challenges of air-gapped environments.
-              Whether I'm migrating a full system to Azure or building managed K8s from the ground up, I am obsessed with one thing: automating away the friction.
-            </p>
+With more than 5 years of DevOps experience, my approach is simple: I automate basic tasks into reliable processes that work. I don't follow every new trend blindly; I only adopt what gives us a real edge. Since I believe the ability to collaborate is inseparable from the technical work, I focus on building systems that don't just function, but actually support the people using them.            </p>
             <p className="text-gray-600 dark:text-gray-400 mb-6">
               This site serves as both my portfolio and a living document of my work — the
               infrastructure behind this website is one of the projects showcased here.
