@@ -8,6 +8,7 @@ export interface Project {
   docsPath?: string;
   thumbnail?: string;
   content?: string; // Fallback — prefer devops/docs/{id}.md
+  remoteDocsUrl?: string; // Raw GitHub URL for docs in other repos
 }
 
 export const projects: Project[] = [
@@ -43,7 +44,7 @@ export const projects: Project[] = [
       ],
     repoUrl: "https://github.com/myusername68/azure-aks.git",
     status: "completed",
-    docsPath: "devops/docs/aks-terraform.md",
+    remoteDocsUrl: "https://raw.githubusercontent.com/myusername68/azure-aks/main/README.md",
 
   },
 ];

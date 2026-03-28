@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -7,6 +8,18 @@ import { projectDocs } from "../data/docs";
 export default function ProjectDetail() {
   const { id } = useParams();
   const project = projects.find((p) => p.id === id);
+  const [remoteDoc, setRemoteDoc] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!project?.remoteDocsUrl || projectDocs[project.id]) return;
+    setLoading(true);
+    fetch(project.remoteDocsUrl)
+      .then((res) => (res.ok ? res.text() : Promise.reject(res.status)))
+      .then((text) => setRemoteDoc(text))
+      .catch(() => setRemoteDoc(null))
+      .finally(() => setLoading(false));
+  }, [project]);
 
   if (!project) {
     return (
@@ -64,7 +77,11 @@ export default function ProjectDetail() {
         </a>
       )}
 
-      {(projectDocs[project.id] || project.content) && (
+      {loading && (
+        <p className="text-gray-500 dark:text-gray-400 text-sm">Loading documentation...</p>
+      )}
+
+      {(projectDocs[project.id] || remoteDoc || project.content) && (
         <article className="prose prose-gray dark:prose-invert max-w-none
           prose-headings:text-gray-900 dark:prose-headings:text-white
           prose-h2:text-xl prose-h2:font-semibold prose-h2:mt-10 prose-h2:mb-4
@@ -79,7 +96,7 @@ export default function ProjectDetail() {
           border-t border-gray-200 dark:border-gray-800 pt-8
         ">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {projectDocs[project.id] || project.content || ""}
+            {projectDocs[project.id] || remoteDoc || project.content || ""}
           </ReactMarkdown>
         </article>
       )}
