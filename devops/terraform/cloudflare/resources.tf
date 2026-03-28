@@ -14,8 +14,23 @@ resource "cloudflare_record" "proxy" {
   proxied         = true
 }
 
+resource "cloudflare_record" "www" {
+  zone_id         = var.cloudflare_zone_id
+  allow_overwrite = true
+  name            = "www"
+  type            = "A"
+  content         = "192.0.2.1"
+  proxied         = true
+}
+
 resource "cloudflare_workers_route" "proxy" {
   zone_id     = var.cloudflare_zone_id
   pattern     = "${var.domain_name}/*"
+  script_name = cloudflare_workers_script.proxy.name
+}
+
+resource "cloudflare_workers_route" "www" {
+  zone_id     = var.cloudflare_zone_id
+  pattern     = "www.${var.domain_name}/*"
   script_name = cloudflare_workers_script.proxy.name
 }
