@@ -60,7 +60,7 @@ export const projects: Project[] = [
       ],
     repoUrl: "",
     status: "completed",
-    remoteDocsUrl: "https://github.com/myusername68/ak-cli/blob/main/README.md",
+    remoteDocsUrl: "https://raw.githubusercontent.com/myusername68/ak-cli/main/README.md",
 
   },
 ];
