@@ -47,4 +47,19 @@ export const projects: Project[] = [
     remoteDocsUrl: "https://raw.githubusercontent.com/myusername68/azure-aks/main/README.md",
 
   },
+  {
+    id: "ai-cli",
+    title: "AI CLI Helper — Command Syntax Assistant",
+    description:
+      "A CLI wrapper that uses AI to help with command-line syntax. Supports both local models via Ollama and cloud models via the Google Gemini API, letting you describe what you want to do in plain English and get the correct command back.",
+    tools: [                                                                                                        
+        "cli",   
+        "python",
+        "powershell"                                                                                                                                                                                             
+      ],
+    repoUrl: "",
+    status: "in-progress",
+    remoteDocsUrl: "",
+
+  },
 ];
