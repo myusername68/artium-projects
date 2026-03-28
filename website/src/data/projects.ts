@@ -51,15 +51,16 @@ export const projects: Project[] = [
     id: "ai-cli",
     title: "AI CLI Helper — Command Syntax Assistant",
     description:
-      "A CLI wrapper that uses AI to help with command-line syntax. Supports both local models via Ollama and cloud models via the Google Gemini API, letting you describe what you want to do in plain English and get the correct command back.",
+      "A zero-dependency CLI assistant that answers straight from your terminal. Supports **Google Gemini** and **Ollama** (local models), with smart agents that fetch context only when needed.",
     tools: [                                                                                                        
         "cli",   
         "python",
-        "powershell"                                                                                                                                                                                             
+        "powershell",
+        "bash",                                                                                                                                                                                            
       ],
     repoUrl: "",
-    status: "in-progress",
-    remoteDocsUrl: "",
+    status: "completed",
+    remoteDocsUrl: "https://github.com/myusername68/ak-cli/blob/main/README.md",
 
   },
 ];
