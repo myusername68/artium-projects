@@ -91,7 +91,23 @@ Place your profile photo at `website/public/profile.jpg`. This is displayed on t
 }
 ```
 
-2. Create a markdown file at `devops/docs/my-project.md` (filename must match the `id`):
+2. Add documentation using **one** of the following options:
+
+**Option A — Local markdown:** Create a file at `devops/docs/my-project.md` (filename must match the `id`).
+
+**Option B — Remote markdown:** Add a `remoteDocsUrl` pointing to a raw GitHub README:
+
+```ts
+{
+  id: "my-project",
+  // ...
+  remoteDocsUrl: "https://raw.githubusercontent.com/user/repo/main/README.md",
+}
+```
+
+The site will fetch and render the remote markdown at runtime. Relative image paths in the remote file (e.g. `![diagram](diagram.png)`) are automatically resolved to the GitHub raw URL.
+
+If using local markdown, create `devops/docs/my-project.md`:
 
 ```md
 ## Overview
