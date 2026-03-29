@@ -5,6 +5,15 @@ import remarkGfm from "remark-gfm";
 import { projects } from "../data/projects";
 import { projectDocs } from "../data/docs";
 
+function resolveImgSrc(src: string, remoteDocsUrl?: string): string {
+  if (!src || src.startsWith("http") || src.startsWith("/")) return src;
+  if (remoteDocsUrl) {
+    const base = remoteDocsUrl.substring(0, remoteDocsUrl.lastIndexOf("/") + 1);
+    return base + src;
+  }
+  return src;
+}
+
 export default function ProjectDetail() {
   const { id } = useParams();
   const project = projects.find((p) => p.id === id);
@@ -95,7 +104,18 @@ export default function ProjectDetail() {
           prose-img:rounded-lg prose-img:my-6
           border-t border-gray-200 dark:border-gray-800 pt-8
         ">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              img: ({ src, alt, ...props }) => (
+                <img
+                  src={resolveImgSrc(src ?? "", project.remoteDocsUrl)}
+                  alt={alt ?? ""}
+                  {...props}
+                />
+              ),
+            }}
+          >
             {projectDocs[project.id] || remoteDoc || project.content || ""}
           </ReactMarkdown>
         </article>
