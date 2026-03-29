@@ -63,4 +63,13 @@ export const projects: Project[] = [
     remoteDocsUrl: "https://raw.githubusercontent.com/myusername68/ak-cli/main/README.md",
 
   },
+  {
+    id: "GCP-cloud-explained",
+    title: "GCP Cloud Explained",
+    description:
+      "This project documents my learning path in GCP.",
+    tools: ["GCP"],
+    status: "planned",
+  },
+
 ];
