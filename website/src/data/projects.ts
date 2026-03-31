@@ -64,10 +64,10 @@ export const projects: Project[] = [
 
   },
   {
-    id: "gcp-n8n",
-    title: "this will be a production ready n8n gcp terraform environment",
+    id: "GCP-n8n",
+    title: "GCP n8n",
     description:
-      "",
+      "This project explores GCP infrastructure and its complexities to understand what is required for a production-ready environment.",
     tools: ["GCP"],
     status: "in-progress",
   },
