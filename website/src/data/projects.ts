@@ -58,7 +58,7 @@ export const projects: Project[] = [
         "powershell",
         "bash",                                                                                                                                                                                            
       ],
-    repoUrl: "",
+    repoUrl: "https://github.com/myusername68/ak-cli.git",
     status: "completed",
     remoteDocsUrl: "https://raw.githubusercontent.com/myusername68/ak-cli/main/README.md",
 
