@@ -64,6 +64,14 @@ export const projects: Project[] = [
 
   },
   {
+    id: "gcp-n8n",
+    title: "this will be a production ready n8n gcp terraform environment",
+    description:
+      "",
+    tools: ["GCP"],
+    status: "in-progress",
+  },
+  {
     id: "GCP-cloud-explained",
     title: "GCP Cloud Explained",
     description:
@@ -71,5 +79,4 @@ export const projects: Project[] = [
     tools: ["GCP"],
     status: "planned",
   },
-
 ];
