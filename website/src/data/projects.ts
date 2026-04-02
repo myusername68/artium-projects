@@ -64,6 +64,16 @@ export const projects: Project[] = [
 
   },
   {
+    id: "ai-skills-template",
+    title: "AI Skills Template",
+    description:
+      "Portable AI skills, prompts, and MCP server configs that work across multiple tools. Includes an install script for quick setup on new machines.",
+    tools: ["Bash", "Claude Code", "Gemini CLI", "GitHub Copilot"],
+    status: "completed",
+    repoUrl: "https://github.com/myusername68/AI-skills-template",
+    remoteDocsUrl: "https://raw.githubusercontent.com/myusername68/AI-skills-template/main/README.md",
+  },
+  {
     id: "GCP-n8n",
     title: "GCP n8n",
     description:
