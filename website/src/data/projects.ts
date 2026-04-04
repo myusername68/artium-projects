@@ -77,9 +77,11 @@ export const projects: Project[] = [
     id: "GCP-n8n",
     title: "GCP n8n",
     description:
-      "This project explores GCP infrastructure and its complexities to understand what is required for a production-ready environment.",
-    tools: ["GCP"],
-    status: "in-progress",
+        "Production-ready, zero-password n8n deployment on GCP. Modular Terraform, IAM-only auth, Workload Identity Federation, and one-variable scaling from $64/mo serverless to high-availability VMs.",    
+    tools: ["GCP", "Terraform", "Docker", "GitHub Actions", "Go", "PostgreSQL", "Redis", "Bash", "PowerShell", "OpenTelemetry"],    
+    status: "completed",
+    remoteDocsUrl: "https://raw.githubusercontent.com/myusername68/n8n-gcp/main/README.md",
+    repoUrl: "https://github.com/myusername68/n8n-gcp",
   },
   {
     id: "GCP-cloud-explained",
