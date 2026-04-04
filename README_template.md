@@ -1,4 +1,6 @@
 # Project Name
+By [artium-projects.com](https://artium-projects.com)
+
 
 > One-line description: what this project does, what problem it solves, and for whom.
 
