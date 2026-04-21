@@ -83,6 +83,16 @@ export const projects: Project[] = [
     remoteDocsUrl: "https://raw.githubusercontent.com/myusername68/n8n-gcp/main/README.md",
     repoUrl: "https://github.com/myusername68/n8n-gcp",
   },
+  {                                                                                                      
+      id: "ollama-rdna1",
+      title: "ollama-rdna1",                                                                             
+      description:                                                                                       
+          "Drop-in Ollama replacement for AMD RDNA 1 GPUs (RX 5500/5600/5700) using llama.cpp + Vulkan. No ROCm needed. Supports text, vision, and audio models with Ollama-compatible and OpenAI-compatible APIs.",  
+      tools: ["Bash", "Python", "llama.cpp", "Vulkan", "Linux"],                                         
+      status: "completed",                                                                               
+      remoteDocsUrl: "https://raw.githubusercontent.com/myusername68/ollama-rdna1/main/README.md",
+      repoUrl: "https://github.com/myusername68/ollama-rdna1",                                           
+  },  
   {
     id: "GCP-cloud-explained",
     title: "GCP Cloud Explained",
